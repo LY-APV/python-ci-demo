@@ -1,19 +1,22 @@
-name: First CI Demo
+name: Python CI Demo
 
 on:
   push:
+  pull_request:
   workflow_dispatch:
 
 jobs:
-  test-workflow:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: List files
-        run: ls -la
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-      - name: Print success message
-        run: echo "CI is working"
+      - name: Run tests
+        run: python -m unittest test_app.py
